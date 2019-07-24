@@ -24,18 +24,17 @@ app.post("/createArray", (req, res) => {
     res.send(newArray);
 });
 
-app.delete("/deleteArray", (req, res) => {
-    //let array = ['a', 'b', 'c', 'd']
-    let pulled = _.pullAt(newArray, [1,3]);
+app.delete("/deleteArray/:num", (req, res) => {
+    let num = req.params.num;
+    let pulled = _.pull(newArray, num);
     res.send(newArray);
 });
 
-app.put("/updateArray/:index", (req, res) => {
-    //let index = req.body.index;
-    let index = req.params.index;
+app.put("/updateArray/:oldNum", (req, res) => {
     let num = req.body.num;
-    //newArray.push(num1);
-    _.set(newArray, index, num)
+    let oldNum = req.params.oldNum;
+    let pos = newArray.indexOf(oldNum);
+    _.set(newArray, pos, num)
     res.send(newArray);
 });
 const port = process.env.PORT || 5000;
